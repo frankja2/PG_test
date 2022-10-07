@@ -17,23 +17,6 @@ jobs:
         min_length: 5 # Min length of the title
         max_length: 20 # Max length of the title
         github_token: ${{ github.token }} # Default: ${{ github.token }}
-  set_status:
-    name: set-status
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write 
-    steps:
-      - name: Create status
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.workflow_run.head_commit.id }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          --data '{
-            "state": "${{ github.event.pull_request.conclusion }}",
-            "context": "regex check workflow",
-            "target_url": "${{ github.event.pull_request.html_url }}"
-            }' \
-          --fail
+
     
 
